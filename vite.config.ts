@@ -5,6 +5,9 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // ⭐⭐ إضافة base لـ GitHub Pages
+  base: process.env.NODE_ENV === 'production' ? '/repository-name/' : '/',
+  
   server: {
     host: "::",
     port: 8080,
@@ -19,4 +22,18 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  
+  // ⭐⭐ إضافة build optimizations لـ GitHub Pages
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['lucide-react']
+        }
+      }
+    }
+  }
 }));
